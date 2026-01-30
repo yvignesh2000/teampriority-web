@@ -33,6 +33,7 @@ const navItems = [
         items: [
             { href: '/topics', label: 'Topics', icon: 'topics' },
             { href: '/team', label: 'Team', icon: 'team' },
+            { href: '/admin', label: 'Admin Dashboard', icon: 'admin', adminOnly: true },
         ],
     },
     {
@@ -112,6 +113,14 @@ const icons: Record<string, ReactNode> = {
             <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
         </svg>
     ),
+    admin: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 3v18h18" />
+            <path d="M18 17V9" />
+            <path d="M13 17V5" />
+            <path d="M8 17v-3" />
+        </svg>
+    ),
 };
 
 const pageTitles: Record<string, string> = {
@@ -123,6 +132,7 @@ const pageTitles: Record<string, string> = {
     '/export': 'Export Center',
     '/topics': 'Topics',
     '/team': 'Team Management',
+    '/admin': 'Admin Dashboard',
     '/prompts': 'Prompt Center',
     '/settings': 'Settings',
 };
@@ -149,17 +159,19 @@ export function AppShell({ children }: AppShellProps) {
                     {navItems.map((section) => (
                         <div key={section.section} className={styles.navSection}>
                             <div className={styles.navSectionLabel}>{section.section}</div>
-                            {section.items.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
-                                    onClick={() => setSidebarOpen(false)}
-                                >
-                                    <span className={styles.navIcon}>{icons[item.icon]}</span>
-                                    {item.label}
-                                </Link>
-                            ))}
+                            {section.items
+                                .filter((item) => !item.adminOnly || user?.role === 'ADMIN')
+                                .map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
+                                        onClick={() => setSidebarOpen(false)}
+                                    >
+                                        <span className={styles.navIcon}>{icons[item.icon]}</span>
+                                        {item.label}
+                                    </Link>
+                                ))}
                         </div>
                     ))}
                 </nav>

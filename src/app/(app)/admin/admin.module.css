@@ -1,0 +1,308 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.headerTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.headerSubtitle {
+    color: var(--gray-600);
+    font-size: 0.95rem;
+}
+
+/* Overview Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 900px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.statCard {
+    background: linear-gradient(135deg, var(--primary-50) 0%, white 100%);
+    border: 1px solid var(--primary-100);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.statCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.statValue {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-600);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.statLabel {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+/* Section Cards */
+.section {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sectionHeader {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--gray-50);
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sectionIcon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-500);
+}
+
+.sectionBody {
+    padding: 1.25rem;
+}
+
+/* Team Members Table */
+.membersTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.membersTable th,
+.membersTable td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.membersTable th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-500);
+    font-weight: 600;
+    background: var(--gray-50);
+}
+
+.membersTable tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.membersTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.memberCell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.memberAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.memberName {
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.memberEmail {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+.taskCount {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.completionRate {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.progressBar {
+    flex: 1;
+    max-width: 100px;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-500), var(--success-400));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.percentText {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray-600);
+    min-width: 40px;
+}
+
+/* Quadrant Distribution */
+.quadrantGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .quadrantGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.quadrantCard {
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.quadrantCard.urgent-important {
+    background: linear-gradient(135deg, #fef2f2, white);
+    border-color: #fecaca;
+}
+
+.quadrantCard.not-urgent-important {
+    background: linear-gradient(135deg, #eff6ff, white);
+    border-color: #bfdbfe;
+}
+
+.quadrantCard.urgent-not-important {
+    background: linear-gradient(135deg, #fefce8, white);
+    border-color: #fef08a;
+}
+
+.quadrantCard.not-urgent-not-important {
+    background: linear-gradient(135deg, #f0fdf4, white);
+    border-color: #bbf7d0;
+}
+
+.quadrantHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.quadrantLabel {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+.quadrantCount {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.urgent-important .quadrantCount {
+    color: #dc2626;
+}
+
+.not-urgent-important .quadrantCount {
+    color: #2563eb;
+}
+
+.urgent-not-important .quadrantCount {
+    color: #ca8a04;
+}
+
+.not-urgent-not-important .quadrantCount {
+    color: #16a34a;
+}
+
+.quadrantSubtext {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray-500);
+}
+
+/* Access Denied */
+.accessDenied {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.accessDeniedIcon {
+    width: 64px;
+    height: 64px;
+    color: var(--warning-500);
+    margin-bottom: 1rem;
+}
+
+.accessDeniedTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+.accessDeniedText {
+    color: var(--gray-600);
+    max-width: 400px;
+    margin: 0 auto;
+}

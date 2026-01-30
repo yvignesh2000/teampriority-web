@@ -96,4 +96,4 @@ export function toFirestoreDate(date: Date | undefined): Timestamp | null {
 }
 
 // Query helpers
-export { where, orderBy, Timestamp };
+export { where, orderBy, Timestamp, QueryConstraint };

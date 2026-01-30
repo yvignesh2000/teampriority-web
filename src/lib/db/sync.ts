@@ -7,6 +7,7 @@ import {
     subscribeToQuery,
     where,
     orderBy,
+    QueryConstraint,
 } from '@/lib/firebase/firestore';
 import { SyncQueueEntry, SyncOperation } from '@/lib/types';
 
@@ -168,8 +169,35 @@ export class SyncEngine<T extends { id: string; isDeleted: boolean; version: num
         return this.localTable.filter((doc: T) => !doc.isDeleted && filter(doc)).toArray();
     }
 
+    // Fetch initial data from Firestore and populate local DB
+    async fetchFromRemote(constraints: QueryConstraint[]): Promise<T[]> {
+        try {
+            const remoteDocs = await queryDocuments<T>(this.collectionName, constraints);
+
+            // Update local DB with remote data
+            for (const remoteDoc of remoteDocs) {
+                const localDoc = await this.localTable.get(remoteDoc.id);
+
+                // Only update local if remote is newer or local doesn't exist
+                if (!localDoc || remoteDoc.version > localDoc.version) {
+                    await this.localTable.put(remoteDoc);
+                }
+            }
+
+            return remoteDocs.filter(doc => !doc.isDeleted);
+        } catch (error) {
+            console.error('Error fetching from remote:', error);
+            // Fall back to local data if offline
+            return this.getAll();
+        }
+    }
+
     // Subscribe to Firestore changes and sync to local
-    startRealtimeSync(constraints: any[]): void {
+    startRealtimeSync(constraints: QueryConstraint[]): void {
+        // First, fetch initial data from Firestore
+        this.fetchFromRemote(constraints).catch(console.error);
+
+        // Then subscribe to realtime updates
         this.unsubscribe = subscribeToQuery<T>(
             this.collectionName,
             constraints,
@@ -194,11 +222,13 @@ export class SyncEngine<T extends { id: string; isDeleted: boolean; version: num
         }
     }
 
-    // Prepare document for Firestore (convert dates to ISO strings for serialization)
+    // Prepare document for Firestore (filter undefined values which Firestore rejects)
     private prepareForFirestore(doc: T): Record<string, unknown> {
         const result: Record<string, unknown> = {};
         for (const [key, value] of Object.entries(doc)) {
             if (key === 'id') continue;
+            // Firestore does NOT accept undefined values - skip them
+            if (value === undefined) continue;
             if (value instanceof Date) {
                 result[key] = value;
             } else {

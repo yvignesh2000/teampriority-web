@@ -18,10 +18,15 @@ export function useTasks() {
         if (!user) return;
 
         try {
-            const allTasks = await taskSync.getAll();
-            setTasks(allTasks.filter(t => !t.isDeleted));
+            // First, fetch from Firestore to get persisted tasks (handles post-logout scenario)
+            const constraints = [where('isDeleted', '==', false)];
+            const remoteTasks = await taskSync.fetchFromRemote(constraints);
+            setTasks(remoteTasks.filter(t => !t.isDeleted));
         } catch (error) {
             console.error('Error loading tasks:', error);
+            // Fallback to local if remote fails
+            const allTasks = await taskSync.getAll();
+            setTasks(allTasks.filter(t => !t.isDeleted));
         } finally {
             setLoading(false);
         }
