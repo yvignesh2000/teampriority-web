@@ -17,15 +17,23 @@ export function useTasks() {
     const loadTasks = useCallback(async () => {
         if (!user) return;
 
+        console.log('[useTasks] loadTasks called for user:', user.id);
+
         try {
-            // First, fetch from Firestore to get persisted tasks (handles post-logout scenario)
-            const constraints = [where('isDeleted', '==', false)];
+            // Fetch from Firestore filtered by ownerId to get only this user's tasks
+            const constraints = [
+                where('ownerId', '==', user.id),
+                where('isDeleted', '==', false)
+            ];
+            console.log('[useTasks] Fetching from Firestore with constraints:', constraints);
             const remoteTasks = await taskSync.fetchFromRemote(constraints);
+            console.log('[useTasks] Fetched', remoteTasks.length, 'tasks from Firestore');
             setTasks(remoteTasks.filter(t => !t.isDeleted));
         } catch (error) {
-            console.error('Error loading tasks:', error);
+            console.error('[useTasks] Error loading tasks:', error);
             // Fallback to local if remote fails
             const allTasks = await taskSync.getAll();
+            console.log('[useTasks] Fallback to local, got', allTasks.length, 'tasks');
             setTasks(allTasks.filter(t => !t.isDeleted));
         } finally {
             setLoading(false);
@@ -37,7 +45,10 @@ export function useTasks() {
 
         // Start realtime sync if online
         if (user && typeof navigator !== 'undefined' && navigator.onLine) {
-            taskSync.startRealtimeSync([where('isDeleted', '==', false)]);
+            taskSync.startRealtimeSync([
+                where('ownerId', '==', user.id),
+                where('isDeleted', '==', false)
+            ]);
         }
 
         return () => {
