@@ -32,8 +32,11 @@ service cloud.firestore {
     
     // Tasks collection
     // Team-visible, but only owners or admins can modify
+    // Tasks collection
+    // Team-visible, but only owners or admins can modify
     match /tasks/{taskId} {
-      allow read: if isAuthenticated();
+      allow read: if isAuthenticated() && 
+        (resource.data.ownerId == request.auth.uid || isAdmin());
       allow create: if isAuthenticated();
       allow update, delete: if isAuthenticated() && 
         (resource.data.ownerId == request.auth.uid || isAdmin());
