@@ -1,0 +1,176 @@
+.page {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.headerLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.description {
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, minmax(280px, auto));
+    gap: 1rem;
+}
+
+.quadrant {
+    background-color: white;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-gray-100);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.quadrantHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.quadrantTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quadrantDot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+}
+
+.quadrantLabel {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.quadrantSubtitle {
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+.quadrantCount {
+    font-size: 0.75rem;
+    color: var(--color-gray-400);
+    background-color: var(--color-gray-100);
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+}
+
+.quadrantBody {
+    flex: 1;
+    padding: 0.75rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.taskCard {
+    padding: 0.75rem;
+    background-color: var(--color-gray-50);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.taskCard:hover {
+    background-color: var(--color-gray-100);
+}
+
+.taskTitle {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-900);
+    margin: 0 0 0.25rem 0;
+}
+
+.taskMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+}
+
+.taskStatus {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.statusDot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+}
+
+.statusTodo {
+    background-color: var(--color-gray-400);
+}
+
+.statusProgress {
+    background-color: var(--color-primary-500);
+}
+
+.statusDone {
+    background-color: var(--color-success);
+}
+
+.addTaskButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-gray-500);
+    background: none;
+    border: 1px dashed var(--color-gray-300);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    width: 100%;
+}
+
+.addTaskButton:hover {
+    background-color: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+    color: var(--color-gray-700);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}

@@ -1,0 +1,102 @@
+.page {
+    max-width: 700px;
+}
+
+.description {
+    font-size: 0.9375rem;
+    color: var(--color-gray-600);
+    margin: 0 0 1.5rem 0;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.memberCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.memberAvatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.memberInfo {
+    flex: 1;
+}
+
+.memberName {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-gray-900);
+}
+
+.youBadge {
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+.memberEmail {
+    font-size: 0.8125rem;
+    color: var(--color-gray-500);
+}
+
+.memberRole {
+    margin-right: 0.5rem;
+}
+
+.info {
+    background-color: var(--color-gray-50);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.infoTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 1rem 0;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.infoItem strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-gray-700);
+    margin-bottom: 0.5rem;
+}
+
+.infoItem ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.8125rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+}

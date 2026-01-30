@@ -1,0 +1,54 @@
+.card {
+    background-color: white;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-gray-100);
+    overflow: hidden;
+}
+
+.elevated {
+    box-shadow: var(--shadow-md);
+    border: none;
+}
+
+.header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.8125rem;
+    color: var(--color-gray-500);
+    margin: 0.25rem 0 0 0;
+}
+
+.body {
+    padding: 1.25rem;
+}
+
+.noPadding {
+    padding: 0;
+}
+
+.footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--color-gray-100);
+    background-color: var(--color-gray-50);
+}
+
+/* Clickable Card */
+.clickable {
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.clickable:hover {
+    border-color: var(--color-primary-200);
+    box-shadow: var(--shadow-sm);
+}
