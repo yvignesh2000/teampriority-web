@@ -3,11 +3,16 @@ import {
     signInWithEmailAndPassword,
     signOut as firebaseSignOut,
     onAuthStateChanged,
+    sendPasswordResetEmail,
     User as FirebaseUser,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from './config';
 import { User, UserRole } from '@/lib/types';
+
+export async function sendPasswordReset(email: string): Promise<void> {
+    await sendPasswordResetEmail(auth, email);
+}
 
 export async function signUp(email: string, password: string, name: string): Promise<User> {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);

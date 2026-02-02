@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User as FirebaseUser } from 'firebase/auth';
 import { User } from '@/lib/types';
-import { onAuthChange, getCurrentUser, signIn, signUp, signOut } from '@/lib/firebase/auth';
+import { onAuthChange, getCurrentUser, signIn, signUp, signOut, sendPasswordReset } from '@/lib/firebase/auth';
 import { clearLocalData } from '@/lib/db/dexie';
 
 interface AuthContextType {
@@ -13,6 +13,7 @@ interface AuthContextType {
     error: string | null;
     login: (email: string, password: string) => Promise<void>;
     register: (email: string, password: string, name: string) => Promise<void>;
+    resetPassword: (email: string) => Promise<void>;
     logout: () => Promise<void>;
     clearError: () => void;
 }
@@ -76,6 +77,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const resetPassword = async (email: string) => {
+        setError(null);
+        setLoading(true);
+        try {
+            await sendPasswordReset(email);
+        } catch (err: any) {
+            setError(getAuthErrorMessage(err.code));
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const logout = async () => {
         setError(null);
         try {
@@ -100,6 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 error,
                 login,
                 register,
+                resetPassword,
                 logout,
                 clearError,
             }}
