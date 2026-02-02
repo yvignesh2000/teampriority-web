@@ -54,6 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const userData = await signIn(email, password);
             setUser(userData);
         } catch (err: any) {
+            console.error('Login error:', err);
             setError(getAuthErrorMessage(err.code));
             throw err;
         } finally {
@@ -134,7 +135,9 @@ function getAuthErrorMessage(code: string): string {
             return 'Invalid email or password.';
         case 'auth/too-many-requests':
             return 'Too many attempts. Please try again later.';
+        case 'auth/user-profile-not-found':
+            return 'Account exists but user profile is missing. Please contact support.';
         default:
-            return 'An error occurred. Please try again.';
+            return `An error occurred. Please try again. (${code || 'Unknown'})`;
     }
 }

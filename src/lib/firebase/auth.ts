@@ -42,7 +42,9 @@ export async function signIn(email: string, password: string): Promise<User> {
     const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
 
     if (!userDoc.exists()) {
-        throw new Error('User profile not found');
+        const error: any = new Error('User profile not found');
+        error.code = 'auth/user-profile-not-found';
+        throw error;
     }
 
     const userData = userDoc.data();
