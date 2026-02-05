@@ -11,48 +11,21 @@ interface AppShellProps {
     children: ReactNode;
 }
 
+// NEW: Minimal navigation for flow-focused experience
 const navItems = [
-    {
-        section: 'Daily',
-        items: [
-            { href: '/top3', label: 'Today', icon: 'top3' },
-            { href: '/inbox', label: 'Inbox', icon: 'inbox' },
-        ],
-    },
-    {
-        section: 'Weekly',
-        items: [
-            { href: '/goals', label: 'Week', icon: 'goal' },
-            { href: '/outcomes', label: 'Outcomes', icon: 'outcomes' },
-        ],
-    },
-    {
-        section: 'Evidence',
-        items: [
-            { href: '/proof', label: 'Proof', icon: 'proof' },
-            { href: '/summary', label: 'Reports', icon: 'summary' },
-        ],
-    },
-    {
-        section: 'Team',
-        items: [
-            { href: '/team', label: 'Team', icon: 'team' },
-            { href: '/admin', label: 'Admin Dashboard', icon: 'admin', adminOnly: true },
-        ],
-    },
-    {
-        section: 'More',
-        items: [
-            { href: '/matrix', label: 'Matrix View', icon: 'matrix' },
-            { href: '/topics', label: 'Topics', icon: 'topics' },
-            { href: '/export', label: 'Export', icon: 'export' },
-            { href: '/prompts', label: 'Prompts', icon: 'prompts' },
-            { href: '/settings', label: 'Settings', icon: 'settings' },
-        ],
-    },
+    { href: '/', label: 'Home', icon: 'home' },
+    { href: '/matrix', label: 'Prioritize', icon: 'matrix' },
+    { href: '/team', label: 'Team', icon: 'team' },
+    { href: '/settings', label: 'Settings', icon: 'settings' },
 ];
 
 const icons: Record<string, ReactNode> = {
+    home: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+    ),
     matrix: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -176,24 +149,18 @@ export function AppShell({ children }: AppShellProps) {
                     <p className={styles.logoSubtext}>Focus on what matters</p>
                 </div>
 
+
                 <nav className={styles.nav}>
-                    {navItems.map((section) => (
-                        <div key={section.section} className={styles.navSection}>
-                            <div className={styles.navSectionLabel}>{section.section}</div>
-                            {section.items
-                                .filter((item) => !item.adminOnly || user?.role === 'ADMIN')
-                                .map((item) => (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
-                                        onClick={() => setSidebarOpen(false)}
-                                    >
-                                        <span className={styles.navIcon}>{icons[item.icon]}</span>
-                                        {item.label}
-                                    </Link>
-                                ))}
-                        </div>
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            <span className={styles.navIcon}>{icons[item.icon]}</span>
+                            {item.label}
+                        </Link>
                     ))}
                 </nav>
 
