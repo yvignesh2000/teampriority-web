@@ -1,141 +1,156 @@
-.card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    transition: all var(--transition-base);
-}
+/* Weekly Goal Card - Premium Design */
 
-.card:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-4);
-}
-
-.label {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-}
-
-.editLink {
-    font-size: 13px;
-    color: var(--color-accent);
+.emptyState,
+.goalCard {
+    display: block;
     text-decoration: none;
-    font-weight: 500;
-    transition: color var(--transition-fast);
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.editLink:hover {
-    color: var(--color-accent-hover);
-}
-
-.goalTitle {
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-4);
-}
-
-.progressBar {
-    height: 4px;
-    background: var(--color-border);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-    margin-bottom: var(--space-3);
-}
-
-.progressFill {
-    height: 100%;
-    background: var(--color-accent);
-    border-radius: var(--radius-full);
-    transition: width var(--transition-slow) ease-out;
-}
-
-.meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.metaText {
-    font-size: 13px;
-    color: var(--color-text-secondary);
-}
-
-.percentage {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-accent);
-}
-
-/* Empty State */
 
 .emptyState {
-    display: block;
-    background: var(--color-surface);
-    border: 2px dashed var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-12);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    border: 2px dashed rgba(99, 102, 241, 0.3);
+    border-radius: 16px;
+    padding: 48px 32px;
     text-align: center;
-    text-decoration: none;
-    transition: all var(--transition-base);
-    cursor: pointer;
 }
 
 .emptyState:hover {
-    border-color: var(--color-accent);
-    background: var(--color-accent-light);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+    border-color: rgba(99, 102, 241, 0.5);
+    transform: scale(1.02);
 }
 
 .emptyContent {
-    max-width: 400px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
 }
 
 .emptyIcon {
-    font-size: 48px;
-    margin-bottom: var(--space-4);
+    font-size: 64px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .emptyTitle {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-2);
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .emptyDescription {
     font-size: 15px;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-6);
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
 }
 
 .primaryButton {
-    background: var(--color-accent);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: var(--space-3) var(--space-6);
-    border-radius: var(--radius-md);
+    border: none;
+    border-radius: 12px;
+    padding: 14px 32px;
     font-size: 15px;
-    font-weight: 500;
-    transition: all var(--transition-fast);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    margin-top: 8px;
 }
 
 .primaryButton:hover {
-    background: var(--color-accent-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
 }
 
 .primaryButton:active {
     transform: translateY(0);
+}
+
+/* Goal Card with progress */
+.goalCard {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.goalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.goalLabel {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.viewLink {
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.viewLink:hover {
+    transform: translateX(4px);
+}
+
+.goalTitle {
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.progressBar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.progressText {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: 500;
 }
