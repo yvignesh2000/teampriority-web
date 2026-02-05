@@ -13,14 +13,21 @@ import styles from './WeeklyGoalCard.module.css';
 
 export function WeeklyGoalCard() {
     const { user } = useAuth();
-    const { getCurrentWeekGoal, getOutcomesForGoal } = useGoals();
 
-    const currentGoal = getCurrentWeekGoal();
-    const outcomes = currentGoal ? getOutcomesForGoal(currentGoal.id) : [];
+    let currentGoal = null;
+    let outcomes: any[] = [];
+
+    try {
+        const { getCurrentWeekGoal, getOutcomesForGoal } = useGoals();
+        currentGoal = getCurrentWeekGoal();
+        outcomes = currentGoal ? getOutcomesForGoal(currentGoal.id) : [];
+    } catch (error) {
+        console.error('[WeeklyGoalCard] Error:', error);
+    }
 
     if (!currentGoal) {
         return (
-            <Link href="/week" className={styles.emptyState}>
+            <Link href="/goals" className={styles.emptyState}>
                 <div className={styles.emptyContent}>
                     <div className={styles.emptyIcon}>🎯</div>
                     <h2 className={styles.emptyTitle}>Set your weekly impact goal</h2>
