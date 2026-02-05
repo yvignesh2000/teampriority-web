@@ -76,6 +76,7 @@ export function useProof() {
     const createLog = useCallback(async (data: {
         type: ProofType;
         content: string;
+        linkedOutcomeIds?: string[];
         category?: string;
         impactTag?: ImpactTag;
         date?: Date;
@@ -84,8 +85,10 @@ export function useProof() {
 
         const log = await proofSync.create({
             ...data,
+            organizationId: user.organizationId!,
             date: data.date || getToday(),
             userId: user.id,
+            linkedOutcomeIds: data.linkedOutcomeIds || [],
             isDeleted: false,
         });
 

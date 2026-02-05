@@ -1,0 +1,28 @@
+.commandCenter {
+    min-height: 100vh;
+    background: var(--color-background);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-12) var(--space-6);
+}
+
+.weeklySection {
+    margin-bottom: var(--space-8);
+}
+
+.focusSection {
+    margin-bottom: var(--space-8);
+}
+
+.nextUpSection {
+    /* Contextual, only appears when relevant */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: var(--space-6) var(--space-4);
+    }
+}

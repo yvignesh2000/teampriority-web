@@ -29,6 +29,7 @@ export default function GoalsPage() {
     const [goalTitle, setGoalTitle] = useState('');
     const [goalDescription, setGoalDescription] = useState('');
     const [newOutcome, setNewOutcome] = useState('');
+    const [newOutcomeDoD, setNewOutcomeDoD] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const weekStart = getWeekStart(getRelativeDay(currentWeekOffset * 7));
@@ -81,8 +82,10 @@ export default function GoalsPage() {
             await createOutcome({
                 goalId: currentGoal.id,
                 description: newOutcome.trim(),
+                definitionOfDone: newOutcomeDoD.trim() || '',
             });
             setNewOutcome('');
+            setNewOutcomeDoD('');
             showToast('Outcome added', 'success');
         } catch (error: any) {
             showToast(error.message || 'Failed to add outcome', 'error');
@@ -196,9 +199,14 @@ export default function GoalsPage() {
                         {outcomes.length < 3 && (
                             <div className={styles.addOutcome}>
                                 <Input
-                                    placeholder="Add an outcome..."
+                                    placeholder="Outcome description..."
                                     value={newOutcome}
                                     onChange={(e) => setNewOutcome(e.target.value)}
+                                />
+                                <Input
+                                    placeholder="Definition of Done (when is this complete?)"
+                                    value={newOutcomeDoD}
+                                    onChange={(e) => setNewOutcomeDoD(e.target.value)}
                                     onKeyDown={(e) => e.key === 'Enter' && handleAddOutcome()}
                                 />
                                 <Button onClick={handleAddOutcome} disabled={!newOutcome.trim()}>

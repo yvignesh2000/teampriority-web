@@ -1,0 +1,141 @@
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem;
+    background: var(--color-gray-50);
+    border-radius: 12px;
+    border: 2px dashed var(--color-gray-200);
+}
+
+.emptyTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-gray-700);
+}
+
+.emptyText {
+    color: var(--color-gray-500);
+    text-align: center;
+}
+
+.addForm {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-gray-200);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--color-gray-200);
+    transition: all 0.15s;
+}
+
+.item:hover {
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-300);
+}
+
+.itemContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.itemTitle {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-gray-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.itemMeta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--color-gray-500);
+}
+
+.itemActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.convertButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.convertButton:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.deleteButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-gray-400);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.deleteButton:hover {
+    color: var(--color-danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.count {
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
+}

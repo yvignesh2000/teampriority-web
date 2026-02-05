@@ -1,5 +1,7 @@
 import Dexie, { Table } from 'dexie';
 import {
+    Organization,
+    User,
     Task,
     Topic,
     WeeklyGoal,
@@ -9,10 +11,10 @@ import {
     WeeklySummary,
     SyncQueueEntry,
     SyncMeta,
-    User,
 } from '@/lib/types';
 
 export class TeamPriorityDB extends Dexie {
+    organizations!: Table<Organization>;
     users!: Table<User>;
     tasks!: Table<Task>;
     topics!: Table<Topic>;
@@ -27,15 +29,17 @@ export class TeamPriorityDB extends Dexie {
     constructor() {
         super('TeamPriorityDB');
 
-        this.version(1).stores({
-            users: 'id, email, role',
-            tasks: 'id, quadrant, status, topicId, ownerId, createdBy, isDeleted, updatedAt',
-            topics: 'id, name, isDeleted',
-            weeklyGoals: 'id, userId, weekStart, isDeleted',
-            goalOutcomes: 'id, goalId, userId, isDeleted',
-            top3Items: 'id, userId, date, order, isDeleted',
-            proofLogs: 'id, userId, date, type, isDeleted',
-            weeklySummaries: 'id, userId, weekStart, isDeleted',
+        // V3: Multi-tenant SaaS schema with organizationId on all entities
+        this.version(3).stores({
+            organizations: 'id, ownerId, inviteCode',
+            users: 'id, email, organizationId, role',
+            tasks: 'id, organizationId, quadrant, status, topicId, ownerId, createdBy, outcomeId, isDeleted, updatedAt',
+            topics: 'id, organizationId, name, isDeleted',
+            weeklyGoals: 'id, organizationId, userId, weekStart, isDeleted',
+            goalOutcomes: 'id, organizationId, goalId, userId, isDeleted',
+            top3Items: 'id, organizationId, userId, date, order, isDeleted',
+            proofLogs: 'id, organizationId, userId, date, type, *linkedOutcomeIds, isDeleted',
+            weeklySummaries: 'id, organizationId, userId, weekStart, isDeleted',
             syncQueue: '++id, collection, documentId, operation, createdAt',
             syncMeta: 'id, collection, lastSyncedAt',
         });
@@ -47,6 +51,7 @@ export const localDb = new TeamPriorityDB();
 // Clear all local data (for logout)
 export async function clearLocalData(): Promise<void> {
     await Promise.all([
+        localDb.organizations.clear(),
         localDb.users.clear(),
         localDb.tasks.clear(),
         localDb.topics.clear(),

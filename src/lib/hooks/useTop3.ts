@@ -71,6 +71,7 @@ export function useTop3() {
         }
 
         const item = await top3Sync.create({
+            organizationId: user.organizationId!,
             content: data.content,
             linkedTaskId: data.linkedTaskId,
             date,

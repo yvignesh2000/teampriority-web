@@ -82,6 +82,7 @@ export function useGoals() {
         }
 
         const goal = await goalSync.create({
+            organizationId: user.organizationId!,
             title: data.title,
             description: data.description,
             weekStart,
@@ -104,6 +105,7 @@ export function useGoals() {
     const createOutcome = useCallback(async (data: {
         goalId: string;
         description: string;
+        definitionOfDone?: string;
         linkedTaskId?: string;
     }) => {
         if (!user) throw new Error('Not authenticated');
@@ -115,6 +117,8 @@ export function useGoals() {
 
         const outcome = await outcomeSync.create({
             ...data,
+            organizationId: user.organizationId!,
+            definitionOfDone: data.definitionOfDone || '',
             userId: user.id,
             isCompleted: false,
             order: existingOutcomes.length + 1,

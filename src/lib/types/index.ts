@@ -1,6 +1,6 @@
 // All TypeScript types for TeamPriority Web
 
-export type UserRole = 'MEMBER' | 'ADMIN';
+export type UserRole = 'OWNER' | 'ADMIN' | 'MEMBER';
 export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE' | 'ARCHIVED';
 export type Quadrant = 'UI' | 'UNI' | 'NUI' | 'NUNI';
 export type ProofType = 'SHIPPED' | 'SOLVED' | 'IMPROVED';
@@ -8,10 +8,23 @@ export type ImpactTag = 'LOW' | 'MEDIUM' | 'HIGH';
 export type SyncOperation = 'CREATE' | 'UPDATE' | 'DELETE';
 export type PromptType = 'TOP3_MORNING' | 'PROOF_EVENING' | 'SUMMARY_FRIDAY';
 
+// Organization (Tenant) - The core SaaS entity
+export interface Organization {
+  id: string;
+  name: string;
+  ownerId: string;
+  inviteCode: string;  // For team invites
+  isDeleted: boolean;
+  version: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface User {
   id: string;
   email: string;
   name: string;
+  organizationId: string;  // Tenant isolation
   role: UserRole;
   createdAt: Date;
   updatedAt: Date;
@@ -19,14 +32,17 @@ export interface User {
 
 export interface Task {
   id: string;
+  organizationId: string;
   title: string;
   description?: string;
+  nextAction?: string;
   quadrant: Quadrant;
   status: TaskStatus;
   topicId?: string;
   ownerId: string;
   createdBy: string;
   dueDate?: Date;
+  outcomeId?: string;
   linkedGoalOutcomeId?: string;
   isDeleted: boolean;
   version: number;
@@ -36,6 +52,7 @@ export interface Task {
 
 export interface Topic {
   id: string;
+  organizationId: string;
   name: string;
   color: string;
   createdBy: string;
@@ -47,6 +64,7 @@ export interface Topic {
 
 export interface WeeklyGoal {
   id: string;
+  organizationId: string;
   userId: string;
   weekStart: Date;
   title: string;
@@ -59,9 +77,11 @@ export interface WeeklyGoal {
 
 export interface GoalOutcome {
   id: string;
+  organizationId: string;
   goalId: string;
   userId: string;
   description: string;
+  definitionOfDone: string;
   linkedTaskId?: string;
   isCompleted: boolean;
   order: number;
@@ -73,11 +93,15 @@ export interface GoalOutcome {
 
 export interface Top3Item {
   id: string;
+  organizationId: string;
   userId: string;
   date: Date;
   order: number;
   content: string;
   linkedTaskId?: string;
+  linkedOutcomeId?: string;  // NEW: Link to weekly outcome
+  quadrant?: string;          // NEW: Q1, Q2, Q3, Q4 from Matrix
+  proofText?: string;         // NEW: Inline proof logging
   isCompleted: boolean;
   isDeleted: boolean;
   version: number;
@@ -87,10 +111,13 @@ export interface Top3Item {
 
 export interface ProofLog {
   id: string;
+  organizationId: string;
   userId: string;
   date: Date;
   type: ProofType;
   content: string;
+  linkedOutcomeIds: string[];
+  attachmentUrls?: string[];
   category?: string;
   impactTag?: ImpactTag;
   isDeleted: boolean;
@@ -101,6 +128,7 @@ export interface ProofLog {
 
 export interface WeeklySummary {
   id: string;
+  organizationId: string;
   userId: string;
   weekStart: Date;
   content: string;

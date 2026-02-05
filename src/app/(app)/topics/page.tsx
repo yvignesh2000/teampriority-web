@@ -83,6 +83,7 @@ export default function TopicsPage() {
                 showToast('Topic updated', 'success');
             } else {
                 const newTopic = await topicSync.create({
+                    organizationId: user.organizationId!,
                     name: name.trim(),
                     color,
                     createdBy: user.id,

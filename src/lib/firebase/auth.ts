@@ -21,6 +21,7 @@ export async function signUp(email: string, password: string, name: string): Pro
     const userData: Omit<User, 'id'> = {
         email: firebaseUser.email || email,
         name,
+        organizationId: '',  // Will be set during onboarding
         role: 'MEMBER' as UserRole,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -57,6 +58,7 @@ export async function signIn(email: string, password: string): Promise<User> {
         id: firebaseUser.uid,
         email: userData.email,
         name: userData.name,
+        organizationId: userData.organizationId || '',
         role: userData.role,
         createdAt: userData.createdAt?.toDate() || new Date(),
         updatedAt: userData.updatedAt?.toDate() || new Date(),
@@ -79,6 +81,7 @@ export async function getCurrentUser(): Promise<User | null> {
         id: firebaseUser.uid,
         email: userData.email,
         name: userData.name,
+        organizationId: userData.organizationId || '',
         role: userData.role,
         createdAt: userData.createdAt?.toDate() || new Date(),
         updatedAt: userData.updatedAt?.toDate() || new Date(),

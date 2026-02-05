@@ -13,32 +13,39 @@ interface AppShellProps {
 
 const navItems = [
     {
-        section: 'Focus',
+        section: 'Daily',
         items: [
-            { href: '/matrix', label: 'Matrix', icon: 'matrix' },
-            { href: '/goals', label: 'Weekly Goal', icon: 'goal' },
-            { href: '/top3', label: "Today's Top 3", icon: 'top3' },
+            { href: '/top3', label: 'Today', icon: 'top3' },
+            { href: '/inbox', label: 'Inbox', icon: 'inbox' },
         ],
     },
     {
-        section: 'Track',
+        section: 'Weekly',
         items: [
-            { href: '/proof', label: 'Proof Log', icon: 'proof' },
-            { href: '/summary', label: 'Weekly Summary', icon: 'summary' },
-            { href: '/export', label: 'Export', icon: 'export' },
+            { href: '/goals', label: 'Week', icon: 'goal' },
+            { href: '/outcomes', label: 'Outcomes', icon: 'outcomes' },
+        ],
+    },
+    {
+        section: 'Evidence',
+        items: [
+            { href: '/proof', label: 'Proof', icon: 'proof' },
+            { href: '/summary', label: 'Reports', icon: 'summary' },
         ],
     },
     {
         section: 'Team',
         items: [
-            { href: '/topics', label: 'Topics', icon: 'topics' },
             { href: '/team', label: 'Team', icon: 'team' },
             { href: '/admin', label: 'Admin Dashboard', icon: 'admin', adminOnly: true },
         ],
     },
     {
-        section: 'System',
+        section: 'More',
         items: [
+            { href: '/matrix', label: 'Matrix View', icon: 'matrix' },
+            { href: '/topics', label: 'Topics', icon: 'topics' },
+            { href: '/export', label: 'Export', icon: 'export' },
             { href: '/prompts', label: 'Prompts', icon: 'prompts' },
             { href: '/settings', label: 'Settings', icon: 'settings' },
         ],
@@ -121,19 +128,33 @@ const icons: Record<string, ReactNode> = {
             <path d="M8 17v-3" />
         </svg>
     ),
+    inbox: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 12h-6l-2 3H10l-2-3H2" />
+            <path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z" />
+        </svg>
+    ),
+    outcomes: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+            <path d="M22 4L12 14.01l-3-3" />
+        </svg>
+    ),
 };
 
 const pageTitles: Record<string, string> = {
-    '/matrix': 'Eisenhower Matrix',
+    '/matrix': 'Matrix View',
     '/goals': 'Weekly Impact Goal',
-    '/top3': "Today's Top 3",
-    '/proof': 'Daily Proof Log',
-    '/summary': 'Weekly Summary',
+    '/top3': "Today",
+    '/inbox': 'Inbox',
+    '/outcomes': 'Outcomes',
+    '/proof': 'Proof Log',
+    '/summary': 'Reports',
     '/export': 'Export Center',
     '/topics': 'Topics',
-    '/team': 'Team Management',
+    '/team': 'Team Dashboard',
     '/admin': 'Admin Dashboard',
-    '/prompts': 'Prompt Center',
+    '/prompts': 'Prompts',
     '/settings': 'Settings',
 };
 

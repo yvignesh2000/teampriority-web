@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { User, Task } from '@/lib/types';
 import { useAuth } from '@/lib/context/AuthContext';
-import { queryDocuments } from '@/lib/firebase/firestore';
+import { useOrganization } from '@/lib/hooks/useOrganization';
+import { queryDocuments, where } from '@/lib/firebase/firestore';
 import { PageLoading } from '@/components/ui/LoadingSpinner';
+import { Button } from '@/components/ui/Button';
+import { useToast } from '@/lib/context/ToastContext';
 import styles from './admin.module.css';
 
 interface TeamMemberStats {
@@ -24,6 +27,8 @@ interface QuadrantStats {
 
 export default function AdminDashboardPage() {
     const { user } = useAuth();
+    const { organization, regenerateInviteCode } = useOrganization();
+    const { showToast } = useToast();
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [memberStats, setMemberStats] = useState<TeamMemberStats[]>([]);
@@ -40,21 +45,25 @@ export default function AdminDashboardPage() {
         avgCompletion: 0,
     });
 
-    const isAdmin = user?.role === 'ADMIN';
+    const isAdmin = user?.role === 'ADMIN' || user?.role === 'OWNER';
 
     useEffect(() => {
         const loadData = async () => {
-            if (!isAdmin) {
+            if (!isAdmin || !user?.organizationId) {
                 setLoading(false);
                 return;
             }
 
             try {
-                // Load all users
-                const users = await queryDocuments<User>('users', []);
+                // Load users in this org only
+                const users = await queryDocuments<User>('users', [
+                    where('organizationId', '==', user.organizationId)
+                ]);
 
-                // Load all tasks
-                const tasks = await queryDocuments<Task>('tasks', []);
+                // Load tasks in this org only
+                const tasks = await queryDocuments<Task>('tasks', [
+                    where('organizationId', '==', user.organizationId)
+                ]);
 
                 // Calculate per-user stats
                 const stats: TeamMemberStats[] = users.map((u) => {

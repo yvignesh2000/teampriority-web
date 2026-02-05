@@ -5,6 +5,7 @@ import { User as FirebaseUser } from 'firebase/auth';
 import { User } from '@/lib/types';
 import { onAuthChange, getCurrentUser, signIn, signUp, signOut, sendPasswordReset } from '@/lib/firebase/auth';
 import { clearLocalData } from '@/lib/db/dexie';
+import { processSyncQueue } from '@/lib/db/sync';
 
 interface AuthContextType {
     user: User | null;
@@ -15,6 +16,7 @@ interface AuthContextType {
     register: (email: string, password: string, name: string) => Promise<void>;
     resetPassword: (email: string) => Promise<void>;
     logout: () => Promise<void>;
+    refreshUser: () => Promise<void>;
     clearError: () => void;
 }
 
@@ -93,6 +95,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const logout = async () => {
         setError(null);
         try {
+            // First, sync any pending changes to Firestore
+            console.log('Syncing pending changes before logout...');
+            await processSyncQueue();
+
+            // Then sign out and clear local data
             await signOut();
             await clearLocalData();
             setUser(null);
@@ -101,6 +108,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setError('Failed to sign out');
             throw err;
         }
+    };
+
+    const refreshUser = async () => {
+        const userData = await getCurrentUser();
+        setUser(userData);
     };
 
     const clearError = () => setError(null);
@@ -116,6 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 register,
                 resetPassword,
                 logout,
+                refreshUser,
                 clearError,
             }}
         >

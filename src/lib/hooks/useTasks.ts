@@ -67,6 +67,7 @@ export function useTasks() {
 
         const task = await taskSync.create({
             ...data,
+            organizationId: user.organizationId!,
             status: 'TODO' as TaskStatus,
             ownerId: user.id,
             createdBy: user.id,

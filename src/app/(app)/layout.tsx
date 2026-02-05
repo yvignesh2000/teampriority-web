@@ -13,6 +13,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (!loading && !user) {
             router.replace('/login');
+        } else if (!loading && user && !user.organizationId) {
+            // User exists but has no organization - send to onboarding
+            router.replace('/onboarding');
         }
     }, [user, loading, router]);
 
@@ -22,6 +25,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
     if (!user) {
         return <PageLoading message="Redirecting to login..." />;
+    }
+
+    if (!user.organizationId) {
+        return <PageLoading message="Setting up your team..." />;
     }
 
     return <AppShell>{children}</AppShell>;

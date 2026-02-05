@@ -1,0 +1,241 @@
+/**
+ * Animation Utilities
+ * Smooth, professional micro-interactions
+ */
+
+/* Keyframes */
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes progressIncrement {
+    from {
+        width: var(--progress-start, 0%);
+    }
+
+    to {
+        width: var(--progress-end, 100%);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Utility Classes */
+
+.animate-checkmark {
+    animation: checkmark var(--transition-base) ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--transition-base) ease-out;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp var(--transition-slow) ease-out;
+}
+
+.animate-fade-in-scale {
+    animation: fadeInScale var(--transition-base) ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInFromLeft var(--transition-base) ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInFromRight var(--transition-base) ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Transition Utilities */
+
+.transition-all {
+    transition: all var(--transition-base);
+}
+
+.transition-colors {
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.transition-transform {
+    transition: transform var(--transition-base);
+}
+
+.transition-opacity {
+    transition: opacity var(--transition-base);
+}
+
+/* Interactive States */
+
+.interactive {
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.interactive:hover {
+    opacity: 0.8;
+}
+
+.interactive:active {
+    transform: scale(0.98);
+}
+
+.interactive-scale:hover {
+    transform: scale(1.02);
+}
+
+.interactive-scale:active {
+    transform: scale(0.98);
+}
+
+/* Progress Bar Animation */
+
+.progress-bar {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+    height: 4px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow) ease-out;
+}
+
+.progress-fill.animated {
+    animation: progressIncrement var(--transition-slow) ease-out;
+}
+
+/* Loading States */
+
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--color-border) 0%,
+            var(--color-surface-hover) 50%,
+            var(--color-border) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Completion Flash */
+
+.completion-flash {
+    animation: completionFlash var(--transition-slow) ease-out;
+}
+
+@keyframes completionFlash {
+    0% {
+        background-color: transparent;
+    }
+
+    50% {
+        background-color: var(--color-success-light);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Toast Slide In */
+
+.toast-enter {
+    animation: fadeInUp var(--transition-slow) ease-out;
+}
+
+.toast-exit {
+    animation: fadeIn var(--transition-base) ease-out reverse;
+}
