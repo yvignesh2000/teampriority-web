@@ -37,7 +37,7 @@ export default function SignupPage() {
 
         try {
             await register(email, password, name);
-            router.push('/matrix');
+            router.push('/');
         } catch (err) {
             // Error is handled by context
         } finally {

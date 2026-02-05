@@ -22,7 +22,7 @@ export default function LoginPage() {
 
         try {
             await login(email, password);
-            router.push('/matrix');
+            router.push('/');
         } catch (err) {
             // Error is handled by context
         } finally {

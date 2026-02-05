@@ -116,6 +116,7 @@ const icons: Record<string, ReactNode> = {
 };
 
 const pageTitles: Record<string, string> = {
+    '/': 'Command Center',
     '/matrix': 'Matrix View',
     '/goals': 'Weekly Impact Goal',
     '/top3': "Today",
